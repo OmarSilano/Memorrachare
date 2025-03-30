@@ -1,0 +1,95 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url(https://st2.depositphotos.com/1005738/12341/v/450/depositphotos_123417500-stock-illustration-cute-emoji-designs-seamless-pattern.jpg);
+    background-size: cover;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.container{
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:30px;
+    background-color: rgb(7, 73, 73);
+    padding:40px 60px;
+}
+
+h1{
+    font-size:3em;
+    color:white;
+}
+
+h2{
+    font-size:1.5em;
+    color:white;
+}
+
+#reset {
+    padding:15px 20px;
+    color:rgb(44, 215, 175);
+    background-color: white;
+    font-size:1.5em;
+    cursor:pointer;
+    font-weight: 600;
+    border:none;
+}
+
+#reset:hover {
+    background-color: rgb(44, 215, 175);
+    color:white;
+    transition:0.4s;
+}
+
+.game {
+    width: 440px;
+    height:440px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    transform-style: preserve-3d;
+    perspective:500px;
+}
+
+.item.boxOpen{
+    transform: rotateY(0deg);
+}
+
+.item {
+    position:relative;
+    width:100px;
+    height:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:3em;
+    background: #fff;
+    transform:rotateY(180deg);
+
+    transition:0.4s;
+}
+
+.item::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:aquamarine;
+    transition:0.4s;
+    transform: rotateY(0deg);
+    backface-visibility: hidden;
+}
+
+.boxOpen::after, .boxMatch::after{
+    transform: rotateY(180deg);
+}
