@@ -1,36 +1,139 @@
 <!doctype html>
 <html dir="ltr">
-
 <head>
-	<meta charset="UTF-8" />
-	<title>MEMORY GAME</title>
-    <!-- Il manifest deve essere linkato nel documento affinché il browser possa leggerlo -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet"	href="style.css">
+    <meta charset="UTF-8" />
+    <title>MEMORRACHARÉ</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+<body>
 
-	<body>
+    <!-- Controlli Fluttuanti in alto a destra -->
+    <div class="floating-controls">
+        <button id="btn-impostazioni" class="audio-toggle" title="Impostazioni Audio">⚙️</button>
+    </div>
 
-        <div class="container">
+    <!-- Pannello Impostazioni Audio (Nascosto di default tramite la tua classe .hidden) -->
+    <div id="pannello-audio" class="audio-panel hidden">
+        <h3>Volume</h3>
+        
+        <div class="slider-container">
+            <button id="toggle-musica" class="btn-toggle-audio">🎵 Music</button>
+            <input type="range" id="vol-musica" min="0" max="1" step="0.1" value="0.3">
+        </div>
+        
+        <div class="slider-container">
+            <button id="toggle-effetti" class="btn-toggle-audio">🔊 Sound Effects</button>
+            <input type="range" id="vol-effetti" min="0" max="1" step="0.1" value="0.5">
+        </div>
+        
+        <button id="chiudi-audio" class="btn-chiudi">Close</button>
+    </div>
 
-            <h1>MEMORY GAME</h1>
 
-            <h2>Mosse totali: <span id="mosse"></span></h2>
-
-            <h2>Record: <span id="record"></span></h2>
-            
-            <div class="game"></div>
-
-            <button id="reset" onclick="window.location.reload();">RESET</button>
-
+    <div class="container">
+        
+        <!-- INSEGNA DEL GIOCO (Mascotte + Titolo particolare) -->
+        <div class="game-header">
+            <img src="img/mascotte2.png" alt="Re di Denari" class="mascotte-logo">
+            <h1 class="game-title">MEMORRACHARÉ</h1>
         </div>
 
+        <!-- MENU SCREEN -->
+        <div id="menu" class="menu-panel">
+            
+            
+            <h2>Choose Your Opponent</h2>
+            <select id="scelta-giocatori">
+                <option value="1">Solo</option>
+                <option value="2">P1 vs P2 (Local)</option>
+                <option value="40">P1 vs CPU (Easy)</option>
+                <option value="70">P1 vs CPU (Medium)</option>
+                <option value="90">P1 vs CPU (Killer)</option>
+            </select>
 
-        <script>
-            if('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js', { scope: '/' });
-            }
-        </script> 
-        
-	</body>
+            <h2>Choose Mode</h2>
+            
+            <!-- RULES EXPLANATION BOX (Aggiornato con Anteprime PNG) -->
+            <div class="regole-box">
+                <!-- ESEMPIO CLASSIC -->
+                <p class="rule-line rule-classic">
+                    <img src="img/re_denari.jpg" alt="Card" class="icon-mini"> = <img src="img/re_denari.jpg" alt="Card" class="icon-mini">
+                    <span><strong>Classic:</strong> Find identical pairs.</span>
+                </p>
+                
+                <!-- ESEMPIO MEMORRACHARÉ -->
+                <p style="margin-top: 8px;"><strong>Memorracharé:</strong> Match same value & affinity:</p>
+                <div class="rule-visual-memorrachare">
+                    <div class="rule-affinity">
+                        <img src="img/donna_coppe.jpg" alt="Cups" class="icon-mini"> ↔ 
+                        <img src="img/donna_denari.jpg" alt="Coins" class="icon-mini">
+                        <span>🔴 <strong>Round:</strong> Cups ↔ Coins</span>
+                    </div>
+                    <div class="rule-affinity">
+                        <img src="img/cavallo_bastoni.jpg" alt="Clubs" class="icon-mini"> ↔ 
+                        <img src="img/cavallo_spade.jpg" alt="Swords" class="icon-mini">
+                        <span>⚔️ <strong>Long:</strong> Clubs ↔ Swords</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTONI AFFIANCATI -->
+            <div class="menu-buttons">
+                <button id="btn-classic">Classic</button>
+                <button id="btn-memorrachare">Memorracharé</button>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="game-ui" class="hidden">
+            <h2 id="indicatore-turno" style="color: rgb(44, 215, 175);">Turn: PLAYER 1</h2>
+            
+            <!-- Punteggio classico e centrato (Visibile solo in Solo Mode) -->
+            <div id="punteggio-solo" style="text-align: center; color: var(--oro-denari); font-weight: bold; font-size: 1.2em; margin-bottom: 15px;">
+                P1 Score: <span id="punti-g1-solo">0</span> moves
+            </div>
+
+            <!-- Contenitore flessibile per i pannelli e la griglia -->
+            <div class="game-layout-wrapper">
+                
+                <!-- Pannello Sinistro: P1 -->
+                <div class="player-panel" id="panel-p1">
+                    <h3 style="color: var(--oro-denari);">P1 Score: <span id="punti-g1">0</span></h3>
+                    <div id="carte-prese-p1" class="carte-prese-container"></div>
+                </div>
+
+                <!-- L'UNICA GRIGLIA DI GIOCO -->
+                <div class="game"></div>
+
+                <!-- Pannello Destro: P2/CPU -->
+                <div class="player-panel" id="panel-p2">
+                    <h3 style="color: var(--oro-denari);">P2 Score: <span id="punti-g2">0</span></h3>
+                    <div id="carte-prese-p2" class="carte-prese-container"></div>
+                </div>
+
+            </div>
+
+            <button id="reset" style="margin-top: 20px;">BACK TO MENU</button>
+        </div>
+
+        <!-- MODALE DI FINE PARTITA -->
+        <div id="modal-risultato" class="hidden">
+            <div class="modal-content">
+                <img id="modal-img" src="" alt="Mascotte Memorracharé">
+                <h2 id="modal-titolo">Titolo</h2>
+                <p id="modal-messaggio">Messaggio</p>
+                <button id="modal-btn">BACK TO MENU</button>
+            </div>
+        </div>
+
+    </div> <!-- Fine del div class="container" -->
+
+
+    <footer class="site-footer">
+        <p>Memorracharé © 2026 - Designed By omarsilano</p>
+    </footer>
+
+    <script src="game.js"></script>
+</body>
 </html>

@@ -1,95 +1,516 @@
-*{
-    margin:0;
-    padding:0;
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+
+/* --- PALETTE COLORI MEMORRACHARÉ --- */
+:root {
+    --sfondo-tavolo: #143d30; /* Verde Panno scuro */
+    --oro-denari: #f1c40f;    /* Giallo Oro per bottoni e bordi */
+    --oro-scuro: #d4ac0d;     /* Oro scuro per gli effetti hover */
+    --rosso-vino: #c0392b;    /* Rosso per errori e tasto indietro */
+    --verde-vittoria: #2cd7af;/* Verde brillante per i turni e successi */
+    --pergamena: #fdfbf7;     /* Bianco sporco per il fronte delle carte */
+    --testo-chiaro: #ecf0f1;  /* Grigio chiarissimo per i testi normali */
+}
+
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: monospace;
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Fondamentale per spingere il footer in basso */
+    
+    /* Colore di emergenza se l'immagine non carica */
+    background-color: var(--sfondo-tavolo); 
+
+    /* Il tuo bellissimo sfondo combinato: gradiente + pattern */
+    background-image: 
+        linear-gradient(rgba(20, 61, 48, 0.90), rgba(20, 61, 48, 0.95)), 
+        url('img/pattern-sfondo.jpg'); 
+    
+    background-repeat: repeat;
+    background-size: 400px; 
+    background-position: center;
+    background-attachment: fixed; /* Mantiene lo sfondo immobile mentre scorri */
+}
+
+/* L'area centrale alta esattamente 100% dello schermo (100vh) */
+.game-content {
+    min-height: 100vh; /* Spinge il footer fuori dall'inquadratura iniziale! */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: url(https://st2.depositphotos.com/1005738/12341/v/450/depositphotos_123417500-stock-illustration-cute-emoji-designs-seamless-pattern.jpg);
-    background-size: cover;
-    background-color: rgba(0,0,0,0.5);
+    flex-direction: column;
 }
 
-.container{
+/* Il tuo Footer */
+.site-footer {
+    background-color: rgba(20, 40, 20, 0.95);
+    border-top: 2px solid #F3C300;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    color: var(--oro-denari);
+}
+
+.container {
     position: relative;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:30px;
-    background-color: rgb(7, 73, 73);
-    padding:40px 60px;
+    gap: 30px;
+    background-color: transparent; /* Ho rimosso il verde acqua fisso sotto al gioco */
+    padding: 40px 60px;
 }
 
-h1{
-    font-size:3em;
-    color:white;
+h1 {
+    font-size: 3em;
+    color: var(--oro-denari); /* Aggiornato con la variabile d'oro */
 }
 
-h2{
-    font-size:1.5em;
-    color:white;
+h2 {
+    font-size: 1.5em;
+    color: var(--testo-chiaro); /* Aggiornato per il testo generale */
 }
 
+/* --- INSEGNA DEL GIOCO --- */
+.game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px; /* RIDOTTO: prima era 20px */
+}
+
+.mascotte-logo {
+    width: 125px; /* Ingrandito per farsi valere rispetto al titolo! */
+    margin-bottom: -25px; /* Aggiustiamo il margine per tenerlo ben appoggiato sulle lettere */
+    z-index: 3;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+}
+
+.game-title {
+    font-family: 'Macondo', cursive; /* Il nuovo font particolare */
+    font-size: 3em; /* Bello grande */
+    color: var(--oro-denari);
+    margin: 0;
+    z-index: 2;
+    letter-spacing: 2px;
+    /* Effetto 3D e ombra marcata per staccarlo dal pattern di sfondo */
+    text-shadow: 
+        3px 3px 0px #0c251d, 
+        -1px -1px 0px #0c251d,
+        6px 6px 15px rgba(0,0,0,0.8); 
+}
+
+button {
+    background-color: var(--oro-denari);
+    color: #111;
+    border: 2px solid var(--oro-scuro);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--oro-scuro);
+    transform: scale(1.05);
+}
+
+/* Tasto per tornare al menu */
 #reset {
-    padding:15px 20px;
-    color:rgb(44, 215, 175);
-    background-color: white;
-    font-size:1.5em;
-    cursor:pointer;
-    font-weight: 600;
-    border:none;
+    background-color: var(--rosso-vino);
+    color: white;
+    border: none;
+    margin-top: 20px;
 }
 
 #reset:hover {
-    background-color: rgb(44, 215, 175);
-    color:white;
-    transition:0.4s;
+    background-color: #a5281b; 
 }
 
+/* --- GRIGLIA DI GIOCO --- */
 .game {
     width: 440px;
-    height:440px;
+    height: 440px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     transform-style: preserve-3d;
-    perspective:500px;
+    perspective: 500px;
+    
+    /* AGGIUNGI QUESTA RIGA: Impedisce a Flexbox di restringere la griglia */
+    flex-shrink: 0; 
 }
 
-.item.boxOpen{
-    transform: rotateY(0deg);
-}
-
+/* --- LE CARTE --- */
 .item {
-    position:relative;
-    width:100px;
-    height:100px;
+    position: relative;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size:3em;
-    background: #fff;
-    transform:rotateY(180deg);
-
-    transition:0.4s;
+    font-size: 3em;
+    background-color: var(--pergamena); /* Fronte della carta scoperto */
+    border: 2px solid var(--oro-denari); /* Bordo dorato */
+    border-radius: 8px;
+    transform: rotateY(180deg);
+    transition: transform 0.4s;
 }
 
-.item::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:aquamarine;
-    transition:0.4s;
+.item.boxOpen, .item.boxMatch {
+    transform: rotateY(0deg);
+}
+
+/* Il retro della carta (La "copertina") */
+.item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--oro-denari); /* Modificato: usa l'oro al posto di aquamarine */
+    border-radius: 6px; /* Leggermente più piccolo del bordo per non sbavare */
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px); /* Un pattern semplice sul retro */
+    transition: transform 0.4s;
     transform: rotateY(0deg);
     backface-visibility: hidden;
 }
 
-.boxOpen::after, .boxMatch::after{
+.boxOpen::after, .boxMatch::after {
     transform: rotateY(180deg);
+}
+
+.card-img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain; 
+    pointer-events: none; 
+}
+
+
+/* --- MENU E UI --- */
+.hidden {
+    display: none !important;
+}
+
+.menu-panel {
+    background-color: #0c251d; /* Un verde solidissimo e molto scuro che blocca il pattern */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8); /* Un'ombra bella marcata per farlo "sollevare" dal tavolo */
+    border: 2px solid var(--oro-denari); /* Una cornice dorata per staccarlo definitivamente dallo sfondo */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* I due bottoni affiancati */
+.menu-buttons {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.menu-buttons button {
+    flex: 1; /* Fa in modo che i bottoni occupino esattamente la metà dello spazio ciascuno */
+    padding: 15px;
+    font-size: 1.3em;
+}
+
+#game-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#scelta-giocatori {
+    padding: 12px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    border: 2px solid var(--oro-denari);
+    background-color: rgba(20, 61, 48, 0.8); /* Sfondo verde scuro per il menu a tendina */
+    color: var(--oro-denari);
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+}
+
+.regole-box {
+    background: rgba(0, 0, 0, 0.4);
+    border-left: 4px solid var(--oro-denari);
+    padding: 15px;
+    border-radius: 4px;
+    text-align: left;
+    width: 100%;
+    color: var(--testo-chiaro);
+}
+
+.modal-content {
+    background: var(--sfondo-tavolo); 
+    border: 4px solid var(--oro-denari);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    color: white;
+    width: 90%; /* Si adatta anche ai cellulari */
+    max-width: 550px; /* Non diventerà mai più larga di così */
+    box-shadow: 0 0 30px rgba(241, 196, 15, 0.4);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* REGOLE FONDAMENTALI PER CENTRARE TUTTO */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+
+.modal-content img {
+    width: 320px; /* Rimpicciolisce il Re (puoi scendere a 200px se lo vuoi ancora più piccolo) */
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    background: var(--oro-denari);
+    color: black;
+    font-weight: bold;
+    padding: 15px 30px; /* L'ho fatto un pelo più grande per renderlo più "cliccabile" */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 25px; /* DISTANZA DALLA SCRITTA SUPERIORE */
+    transition: transform 0.2s, background 0.2s;
+}
+
+.modal-content button:hover {
+    background: var(--oro-scuro);
+    transform: scale(1.05);
+}
+
+.modal-content p {
+    font-size: 1.4em; /* Leggermente ingrandito */
+    margin-bottom: 5px; /* Ridotto per non spingere troppo in giù il bottone */
+    color: var(--testo-chiaro);
+    font-weight: bold;
+}
+
+/* Nuovo contenitore per i bottoni affiancati */
+#menu .menu-buttons {
+    display: flex;
+    gap: 15px; /* Spazio tra i due bottoni */
+    width: 100%;
+    margin-top: 10px;
+}
+
+#menu .menu-buttons button {
+    flex: 1; /* Ciascun bottone occupa esattamente la metà dello spazio disponibile */
+    padding: 12px; /* Padding ridotto per farli entrare */
+    font-size: 1.1em; /* Font leggermente minore */
+    /* Manteniamo il tuo stile giallo */
+    background-color: #ffd700;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Blocca la dimensione delle immaginette nelle regole */
+.icon-mini {
+    width: 38px !important;  /* Usa !important per forzare la misura */
+    height: 38px !important;
+    object-fit: contain;
+    vertical-align: middle;  /* Le allinea perfettamente al centro del testo */
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+}
+
+/* Evita che le icone rotte o mancanti sballino il layout */
+.rule-line img, .rule-affinity img {
+    max-width: 25px;
+}
+
+/* Pulsante Audio in alto a destra */
+.audio-toggle {
+    position: absolute;  /* Lo sgancia dal normale flusso della pagina */
+    top: 20px;
+    right: 20px;
+    background-color: rgba(20, 40, 20, 0.8); /* Un verdone scuro semitrasparente */
+    border: 2px solid #F3C300; /* Bordo dorato in tema col titolo */
+    border-radius: 50%; /* Lo rende perfettamente rotondo */
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100; /* Assicura che sia sempre sopra a tutto */
+    transition: transform 0.2s, background-color 0.2s; /* Animazione fluida */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effetto quando ci passi sopra col mouse */
+.audio-toggle:hover {
+    transform: scale(1.1);
+    background-color: #F3C300;
+}
+
+/* Il pannello delle impostazioni audio */
+.audio-panel {
+    position: absolute;
+    top: 75px;  /* Si posiziona appena sotto il tasto a ingranaggio */
+    right: 20px;
+    background-color: var(--sfondo-tavolo);
+    border: 2px solid var(--oro-denari);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 200;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 220px;
+}
+
+.audio-panel h3 {
+    text-align: center;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--testo-chiaro);
+    font-weight: bold;
+}
+
+/* Stile per le barre del volume */
+input[type=range] {
+    accent-color: var(--oro-denari); /* Colora la barra di giallo oro */
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-chiudi {
+    padding: 8px;
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+/* I nuovi bottoni per il muto rapido dentro il pannello */
+.btn-toggle-audio {
+    background: transparent;
+    border: none;
+    color: var(--testo-chiaro);
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.btn-toggle-audio:hover {
+    color: var(--oro-denari); /* Diventa dorato quando ci passi sopra */
+}
+
+/* Layout del tavolo da gioco: Sinistra - Centro - Destra */
+.game-layout-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Allinea tutto in alto */
+    gap: 40px; /* Spazio tra i punteggi e la griglia */
+    width: 100%;
+    max-width: 1000px; /* Evita che si allarghi troppo sui monitor giganti */
+    margin-bottom: 20px;
+}
+
+/* Pannelli laterali per i giocatori */
+.player-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    background: rgba(0, 0, 0, 0.3); /* Leggero sfondo scuro per far risaltare l'area */
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid var(--oro-denari);
+}
+
+/* Contenitore per le figurine delle carte trovate */
+.carte-prese-container {
+    display: flex;
+    flex-wrap: wrap; /* Manda a capo le carte se non ci stanno */
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+    min-height: 50px; /* Mantiene l'altezza anche da vuoto */
+}
+
+/* Lo stile delle carte in miniatura collezionate */
+.mini-carta-presa {
+    width: 35px; /* Piccole per non occupare troppo spazio */
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--oro-denari);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    animation: popIn 0.3s ease-out; /* Effetto comparsa */
+}
+
+/* Piccola aggiustatina per i dispositivi mobili (Mette tutto in verticale se lo schermo è stretto) */
+@media (max-width: 768px) {
+    .game-layout-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .player-panel {
+        width: 90%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .carte-prese-container {
+        margin-top: 0;
+    }
+}
+
+/* --- ANIMAZIONE +1 SUI PUNTEGGI --- */
+.piu-uno {
+    position: absolute;
+    top: -20px;
+    right: -10px; /* Lo posiziona vicino all'angolo in alto a destra del punteggio */
+    color: var(--verde-vittoria);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #000, -1px -1px 0px #000; /* Bordino nero per renderlo leggibilissimo */
+    pointer-events: none; /* Non blocca i click del mouse */
+    z-index: 999;
+    animation: floatUpFade 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes floatUpFade {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-40px) scale(1.3); }
 }
