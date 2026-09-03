@@ -482,9 +482,11 @@ function mostraModale(titolo, messaggio, esito) {
     
     if (esito === 'vittoria') {
         modalImg.src = 'img/mascotte-win.png'; 
+        riproduciSuono(suoni.vittoria); // 🎉 SUONO VITTORIA
     } else {
         // Usiamo il re triste sia per la sconfitta che per il pareggio
         modalImg.src = 'img/mascotte-lose.png'; 
+        riproduciSuono(suoni.sconfitta); // 🎺 SUONO SCONFITTA
     }
 
     modal.classList.remove('hidden');
@@ -529,9 +531,9 @@ if (btnResetModale) {
 // ==========================================
 const suoni = {
     flip: new Audio('audio/flip.mp3'),
-    match: new Audio('audio/brindisi.mp3'),
+    match: new Audio('audio/point.mp3'),
     errore: new Audio('audio/hic.mp3'),
-    vittoria: new Audio('audio/bachata.mp3'),
+    vittoria: new Audio('audio/win.mp3'),
     sconfitta: new Audio('audio/lose.mp3'),
     sottofondo: new Audio('audio/abydos_music-chill-reggae.mp3'),
     click: new Audio('audio/click.mp3')
