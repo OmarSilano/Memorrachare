@@ -583,3 +583,22 @@ input[type=range] {
         padding: 20px !important;
     }
 }
+
+/* Correzione layout verticale su smartphone */
+@media screen and (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    #menu, #menu-container {
+        margin: 0 auto !important;
+        position: relative;
+        top: auto;
+        transform: none;
+    }
+}
