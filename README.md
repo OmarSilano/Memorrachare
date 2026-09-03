@@ -27,7 +27,7 @@ The project was developed in pure Frontend (Vanilla), without the use of externa
 ## 🎮 How to Play (Live Demo)
 
 You can play directly from your browser with no installation required! 
-👉 **[PLAY MEMORRACHARÉ NOW](https://omarsilano.github.io/Memorrachare)
+👉 [PLAY MEMORRACHARÉ NOW!](https://omarsilano.github.io/Memorrachare)
 
 ### Memorracharé Mode Rules:
 To score a point, you must flip two cards that have the same number (e.g., two Knights) but belong to the same suit "family":
