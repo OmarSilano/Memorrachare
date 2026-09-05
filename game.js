@@ -9,6 +9,9 @@ let giocatoreAttuale = 1;
 let scoreG1 = 0;
 let scoreG2 = 0;
 let coppieTrovate = 0;
+let cpuTimer = null;
+let matchTimer = null;
+let isGameActive = false;
 
 // Memoria della CPU
 let memoriaCPU = {}; // Salverà { indice_posizione: {dati_carta} }
@@ -145,6 +148,7 @@ function mostraAnimazionePiuUno(idElementoTarget) {
 
 function startGame(mode) {
     currentMode = mode;
+    isGameActive = true;
     
     // Configura la partita in base al menu
     let scelta = parseInt(selettoreGiocatori.value);
@@ -223,6 +227,9 @@ function startGame(mode) {
         gameBoard.appendChild(box);
         
         box.onclick = function() {
+
+            if (!isGameActive) return;
+
             // Se è il turno della CPU, blocca i click umani
             if (isCpuTurn && !this.classList.contains('simulato')) return;
             this.classList.remove('simulato');
@@ -245,7 +252,10 @@ function startGame(mode) {
             if(openBoxes.length === 2) {
                 gameBoard.style.pointerEvents = 'none';
 
-                setTimeout(function() {
+                matchTimer = setTimeout(function() {
+
+                    if (!isGameActive) return;
+
                     let match = false;
                     
                     if (currentMode === 'classic') {
@@ -344,7 +354,7 @@ function startGame(mode) {
                         } else {
                             // IL PEZZO CHE MANCAVA: Se la partita NON è finita e tocca alla CPU, deve continuare a giocare!
                             if (giocatoreAttuale === 2 && cpuDifficulty > 0) {
-                                setTimeout(mossaCPU, 1000);
+                                cpuTimer = setTimeout(mossaCPU, 1000);
                             }
                         }
                     } else { // LA PARENTESI CHE MANCAVA: Separa il punto fatto dall'errore
@@ -363,7 +373,7 @@ function startGame(mode) {
                         // Passa il turno alla CPU se necessario
                         if (giocatoreAttuale === 2 && cpuDifficulty > 0) {
                             isCpuTurn = true;
-                            setTimeout(mossaCPU, 800);
+                            cpuTimer = setTimeout(mossaCPU, 1000);
                         } else {
                             isCpuTurn = false;
                         }
@@ -373,7 +383,7 @@ function startGame(mode) {
                 }, 800); 
             } else if (openBoxes.length === 1 && isCpuTurn) {
                 // La CPU ha girato la prima carta, ora pensa alla seconda
-                setTimeout(mossaCPU, 1000);
+                cpuTimer = setTimeout(mossaCPU, 1000);
             }
         }
     }
@@ -383,6 +393,9 @@ function startGame(mode) {
 // INTELLIGENZA ARTIFICIALE (FUZZY LOGIC)
 // --------------------------------------------------------
 function mossaCPU() {
+
+    if (!isGameActive) return;
+
     if (coppieTrovate >= (maxScore - 1)) return; // Partita finita
 
     let carteSulTavolo = Array.from(document.querySelectorAll('.item'));
@@ -505,6 +518,11 @@ const modalRisultato = document.getElementById('modal-risultato');
 
 // Funzione unica per tornare alla Home
 function tornaAlMenu() {
+
+    isGameActive = false;
+    clearTimeout(cpuTimer);
+    clearTimeout(matchTimer);
+
     // 1. Riproduci il suono del click!
     riproduciSuono(suoni.click); 
 
