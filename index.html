@@ -40,48 +40,25 @@
         </div>
 
         <!-- MENU SCREEN -->
-        <div id="menu" class="menu-panel">
+        <div id="menu">
+            <img src="img/mascotte.png" alt="Mascotte" class="logo">
+            <h1>MEMORRACHARÉ</h1>
             
-            
-            <h2>Choose Your Opponent</h2>
-            <select id="scelta-giocatori">
-                <option value="1">Solo</option>
-                <option value="2">P1 vs P2 (Local)</option>
-                <option value="40">P1 vs CPU (Easy)</option>
-                <option value="70">P1 vs CPU (Medium)</option>
-                <option value="90">P1 vs CPU (Killer)</option>
-            </select>
+            <div id="menu-container">
+                <label>Choose Your Opponent</label>
+                <select id="scelta-giocatori">
+                    <option value="1">Solo</option>
+                    <option value="2">P1 vs P2</option>
+                    <option value="40">P1 vs CPU (Easy)</option>
+                    <option value="70">P1 vs CPU (Medium)</option>
+                    <option value="90">P1 vs CPU (Hard)</option>
+                </select>
 
-            <h2>Choose Mode</h2>
-            
-            <!-- RULES EXPLANATION BOX (Aggiornato con Anteprime PNG) -->
-            <div class="regole-box">
-                <!-- ESEMPIO CLASSIC -->
-                <p class="rule-line rule-classic">
-                    <img src="img/re_denari.jpg" alt="Card" class="icon-mini"> = <img src="img/re_denari.jpg" alt="Card" class="icon-mini">
-                    <span><strong>Classic:</strong> Find identical pairs.</span>
-                </p>
-                
-                <!-- ESEMPIO MEMORRACHARÉ -->
-                <p style="margin-top: 8px;"><strong>Memorracharé:</strong> Match same value & affinity:</p>
-                <div class="rule-visual-memorrachare">
-                    <div class="rule-affinity">
-                        <img src="img/donna_coppe.jpg" alt="Cups" class="icon-mini"> ↔ 
-                        <img src="img/donna_denari.jpg" alt="Coins" class="icon-mini">
-                        <span>🔴 <strong>Round:</strong> Cups ↔ Coins</span>
-                    </div>
-                    <div class="rule-affinity">
-                        <img src="img/cavallo_bastoni.jpg" alt="Clubs" class="icon-mini"> ↔ 
-                        <img src="img/cavallo_spade.jpg" alt="Swords" class="icon-mini">
-                        <span>⚔️ <strong>Long:</strong> Clubs ↔ Swords</span>
-                    </div>
+                <label>Choose Mode</label>
+                <div class="button-container">
+                    <button id="btn-classic">Classic</button>
+                    <button id="btn-memorrachare">Memorracharé</button>
                 </div>
-            </div>
-
-            <!-- BOTTONI AFFIANCATI -->
-            <div class="menu-buttons">
-                <button id="btn-classic">Classic</button>
-                <button id="btn-memorrachare">Memorracharé</button>
             </div>
         </div>
 

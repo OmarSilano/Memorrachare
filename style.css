@@ -602,3 +602,34 @@ input[type=range] {
         transform: none;
     }
 }
+
+/* Modifica le regole base del body (all'inizio del tuo CSS) */
+body {
+    margin: 0;
+    min-height: 100vh; /* Costringe la pagina a essere alta 100% dello schermo */
+    display: flex;
+    flex-direction: column;
+    background-color: #1a251e;
+    color: white;
+    font-family: Arial, sans-serif; /* Metti il font che preferisci */
+}
+
+/* Modifica il contenitore principale del menu */
+#menu {
+    flex: 1; /* Ordina a questo blocco di espandersi, spingendo il footer in basso */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra orizzontalmente */
+    width: 100%;
+}
+
+/* Assicurati che il footer (se ha una classe o un tag) abbia questo: */
+/* Usa l'id o la classe giusta del tuo footer se è diversa */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Sfondo leggermente scuro */
+    margin-top: auto; /* Trucco magico: lo spinge forzatamente verso il fondo */
+}
