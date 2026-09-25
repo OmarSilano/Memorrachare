@@ -1,4 +1,5 @@
 # 🎴 Memorracharé
+<img width="1536" height="1536" alt="mascotte2" src="https://github.com/user-attachments/assets/5c79a5c1-dbef-4dac-89d6-a247c6b487df" />
 
 Welcome to **Memorracharé**, an interactive and custom web memory game based on classic Neapolitan cards. It's not your usual Memory game: besides the classic mode, it introduces a unique strategic variant based on suit affinity!
 
