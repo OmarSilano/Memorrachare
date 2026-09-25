@@ -5,7 +5,6 @@ const maxScore = 8;
 let numeroGiocatori = 1; 
 let cpuDifficulty = 0; // 0 = Umano, 40/70/90 = CPU
 let mosseSolitario = 0;
-document.getElementById('punti-g1-solo').textContent = 0;
 let giocatoreAttuale = 1;
 let scoreG1 = 0;
 let scoreG2 = 0;
@@ -100,6 +99,10 @@ function aggiornaInterfacciaTurni() {
     if (numeroGiocatori === 1) {
         indicatoreTurno.innerHTML = "Solo Mode";
         puntiG1Span.innerHTML = mosseSolitario + " moves"; 
+
+        let punteggioSolo = document.getElementById('punti-g1-solo');
+        if (punteggioSolo) punteggioSolo.textContent = mosseSolitario;
+
     } else {
         let nomeG2 = (cpuDifficulty > 0) ? "CPU" : "PLAYER 2";
         if (giocatoreAttuale === 1) indicatoreTurno.innerHTML = "Turn: PLAYER 1";
