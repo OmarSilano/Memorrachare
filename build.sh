@@ -19,8 +19,12 @@ git clone "$GIT_URL" /workspace/src
 cd /workspace/src
 
 echo "[DOCKER CONTAINER] Avvio del comando 'make'..."
+
+# Disabilita temporaneamente 'set -e' per catturare il log anche se make fallisce
+set +e
 COMPILE_LOG=$(make 2>&1)
 BUILD_STATUS=$?
+set -e
 
 echo "================ OUTPUT DI BUILD ================"
 echo "$COMPILE_LOG"
