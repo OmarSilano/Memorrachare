@@ -15,7 +15,7 @@ check:
 build: check
 	@echo "[MAKE] Creazione cartella di distribuzione '$(DIST_DIR)'..."
 	@mkdir -p $(DIST_DIR)
-	@cp -r index.html style.css script.js assets $(DIST_DIR)/ 2>/dev/null || cp index.html style.css script.js $(DIST_DIR)/
+	@cp -r index.html style.css game.js sw.js manifest.json favicon.ico mascotte-background.jfif audio favicon img $(DIST_DIR)/ 2>/dev/null || cp index.html style.css game.js $(DIST_DIR)/
 	@echo "[MAKE] Impacchettamento artefatto in $(BUILD_ARCHIVE)..."
 	@zip -r $(BUILD_ARCHIVE) $(DIST_DIR) > /dev/null
 	@echo "[MAKE] Build completata con successo! Artefatto generato: $(BUILD_ARCHIVE)"
