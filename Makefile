@@ -9,7 +9,7 @@ check:
 	@echo "[MAKE] Verifica presenza file sorgente Memory Game..."
 	@test -f index.html || (echo "[ERROR] index.html non trovato!"; exit 1)
 	@test -f style.css || (echo "[ERROR] style.css non trovato!"; exit 1)
-	@test -f script.js || (echo "[ERROR] script.js non trovato!"; exit 1)
+	@test -f game.js || (echo "[ERROR] game.js non trovato!"; exit 1)
 	@echo "[MAKE] Controllo integrità superato."
 
 build: check
